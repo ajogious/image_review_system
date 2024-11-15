@@ -1,0 +1,24 @@
+.image-card {
+  padding-top: 200px;
+}
+
+.cards.square {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  transition: all 0.5s ease;
+}
+
+.card-img-tops {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cards.square:hover {
+  transform: scale(1.08);
+  z-index: 1000;
+}

@@ -1,0 +1,71 @@
+.image__profile-card {
+  padding: 200px 0;
+  overflow: hidden;
+}
+
+.carousel-item img {
+  height: 400px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.col-md-6 {
+  margin-bottom: 20px;
+}
+
+button {
+  border: none !important;
+}
+
+.reactions-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.reactions-icons .btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.reviews-section {
+  margin-top: 20px;
+}
+
+.review-item {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.admin-reply {
+  font-style: italic;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.image__profile-form {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #f7f7f7;
+}
+
+@media (max-width: 768px) {
+  .image__profile-card {
+    padding: 200px 10px;
+  }
+
+  .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .reactions-icons {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
