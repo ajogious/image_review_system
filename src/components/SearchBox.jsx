@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import data from "../data/data";
 
-function SearchBox() {
+function SearchBox({ onCategoryChange }) {
   const [category, setCategory] = useState("");
 
   const uniqueCategories = [...new Set(data.map((item) => item.category))];
 
   const handleChange = (e) => {
-    setCategory(e.target.value);
+    const selectedCategory = e.target.value;
+    setCategory(selectedCategory);
+    if (onCategoryChange) {
+      onCategoryChange(selectedCategory); // Call only if the function exists
+    }
   };
 
   return (

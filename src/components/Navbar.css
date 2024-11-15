@@ -4,3 +4,35 @@
   right: 0;
   z-index: 1000;
 }
+
+.nav-home {
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.5s ease;
+}
+
+.nav-home:hover {
+  color: #959595;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal .modal-content {
+  border-radius: 10px;
+}
+
+.modal .modal-header {
+  background-color: #343a40;
+  color: white;
+}
+
+.modal .btn-close {
+  color: white;
+}

@@ -48,7 +48,7 @@ function ImageProfile() {
 
   return (
     <div className="container container-md image__profile-card">
-      <h2>Image Details</h2>
+      <h2 className="pb-3">Image Details</h2>
       <div className="row">
         <div className="col-md-6">
           <Carousel>

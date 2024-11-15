@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-function Card({ image, handleClick }) {
+function Card({ image }) {
   const randomNum = useMemo(
     () => Math.trunc(Math.random() * image.images.length),
     [image.images]
@@ -10,9 +10,7 @@ function Card({ image, handleClick }) {
   const imageUrl = image.images[randomNum];
   const imageId = image.id;
 
-  // Local state to track whether image is in the viewport
   const [isVisible, setIsVisible] = useState(false);
-  const [imageCard, setImageCard] = useState({});
   const imgRef = useRef(null);
 
   useEffect(() => {

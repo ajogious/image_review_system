@@ -1,29 +1,143 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import SearchBox from "./SearchBox";
 import "./Navbar.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function Navbar() {
-  const adminLogin = false;
+  const [isAdminLoggedIn, setAdminLoggedIn] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [loginForm, setLoginForm] = useState({ username: "", password: "" });
+  const [errors, setErrors] = useState({ username: "", password: "" });
+
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = { username: "", password: "" };
+
+    if (!loginForm.username.trim()) {
+      newErrors.username = "Username is required";
+      valid = false;
+    }
+    if (!loginForm.password.trim()) {
+      newErrors.password = "Password is required";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      setAdminLoggedIn(true);
+      setShowModal(false);
+      setLoginForm({ username: "", password: "" });
+    }
+  };
+
   return (
     <div className="header">
       <nav className="navbar navbar-dark bg-dark">
         <div className="container">
-          <Link className="navbar-brand" to="/">
-            Logo
-          </Link>
-          {!adminLogin ? (
-            <Link className="btn btn-primary" type="Link">
+          <div>
+            <Link className="navbar-brand" to="/">
+              Logo
+            </Link>
+            <Link className="nav-home" to="/">
+              Home
+            </Link>
+          </div>
+          {!isAdminLoggedIn ? (
+            <button
+              className="btn btn-primary"
+              onClick={() => setShowModal(true)}
+            >
               Login
-            </Link>
+            </button>
           ) : (
-            <Link className="btn btn-primary" type="Link">
+            <button
+              className="btn btn-primary"
+              onClick={() => setAdminLoggedIn(false)}
+            >
               Logout
-            </Link>
+            </button>
           )}
         </div>
       </nav>
-      <SearchBox />
+
+      {/* Overlay */}
+      {showModal && <div className="modal-overlay"></div>}
+
+      {/* Login Modal */}
+      {showModal && (
+        <div className="modal show d-block" role="dialog">
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Admin Login</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  aria-label="Close"
+                  onClick={() => setShowModal(false)}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <form onSubmit={handleLoginSubmit}>
+                  <div className="mb-3">
+                    <label htmlFor="username" className="form-label">
+                      Username
+                    </label>
+                    <input
+                      type="text"
+                      className={`form-control ${
+                        errors.username ? "is-invalid" : ""
+                      }`}
+                      id="username"
+                      value={loginForm.username}
+                      onChange={(e) =>
+                        setLoginForm({ ...loginForm, username: e.target.value })
+                      }
+                    />
+                    {errors.username && (
+                      <div className="invalid-feedback">{errors.username}</div>
+                    )}
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="password" className="form-label">
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      className={`form-control ${
+                        errors.password ? "is-invalid" : ""
+                      }`}
+                      id="password"
+                      value={loginForm.password}
+                      onChange={(e) =>
+                        setLoginForm({ ...loginForm, password: e.target.value })
+                      }
+                    />
+                    {errors.password && (
+                      <div className="invalid-feedback">{errors.password}</div>
+                    )}
+                  </div>
+                  <button type="submit" className="btn btn-primary">
+                    Login
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-secondary ms-2"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Cancel
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
