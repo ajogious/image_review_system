@@ -4,7 +4,7 @@ import SearchBox from "./SearchBox";
 import fetchPaginatedData from "../data/fetchPaginatedData";
 import "./ImageCard.css";
 
-function ImageCard({ isAdminLoggedIn }) {
+function ImageCard({ isAdminLoggedIn, data, setData }) {
   const [images, setImages] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -39,6 +39,11 @@ function ImageCard({ isAdminLoggedIn }) {
     setCurrentPage(1);
   };
 
+  const handleDelete = (id) => {
+    const updatedData = data.filter((image) => image.id !== id);
+    setData(updatedData); // Update state after deletion
+  };
+
   return (
     <div className="container container-sm mb-5 image-card">
       <SearchBox onCategoryChange={handleCategoryChange} />
@@ -51,7 +56,12 @@ function ImageCard({ isAdminLoggedIn }) {
 
       <div className="row g-0">
         {images.map((image) => (
-          <Card key={image.id} image={image} isAdmin={isAdminLoggedIn} />
+          <Card
+            key={image.id}
+            image={image}
+            isAdmin={isAdminLoggedIn}
+            onDelete={handleDelete}
+          />
         ))}
       </div>
 

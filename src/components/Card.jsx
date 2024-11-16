@@ -1,9 +1,8 @@
 import React, { useMemo, useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import "./Card.css";
 
-function Card({ image, isAdmin }) {
-  console.log(isAdmin);
-
+function Card({ image, isAdmin, onDelete }) {
   const randomNum = useMemo(
     () => Math.trunc(Math.random() * image.images.length),
     [image.images]
@@ -13,6 +12,7 @@ function Card({ image, isAdmin }) {
   const imageId = image.id;
 
   const [isVisible, setIsVisible] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const imgRef = useRef(null);
 
   useEffect(() => {
@@ -32,6 +32,19 @@ function Card({ image, isAdmin }) {
 
     return () => observer.disconnect();
   }, []);
+
+  const handleDelete = () => {
+    setShowPopup(true); // Show the confirmation popup
+  };
+
+  const confirmDelete = () => {
+    setShowPopup(false); // Close the popup
+    onDelete(image.id); // Trigger the delete callback passed from the parent
+  };
+
+  const cancelDelete = () => {
+    setShowPopup(false); // Close the popup without deleting
+  };
 
   return (
     <div className="col-md-3">
@@ -53,16 +66,38 @@ function Card({ image, isAdmin }) {
         <div className="d-flex justify-content-between my-2 px-2">
           <Link
             to="/edit-image"
-            state={{ image }}
+            state={{ image }} // Pass image data to EditImage component
             className="btn btn-warning"
             style={{ width: "40%" }}
           >
             Edit
           </Link>
-          <Link className="btn btn-danger" style={{ width: "40%" }}>
+          <button
+            className="btn btn-danger"
+            style={{ width: "40%" }}
+            onClick={handleDelete}
+          >
             Delete
-          </Link>
+          </button>
         </div>
+      )}
+
+      {/* Custom Confirmation Popup */}
+      {showPopup && (
+        <>
+          <div className="overlay"></div> {/* Dark overlay */}
+          <div className="popup">
+            <h5>Are you sure you want to delete this image?</h5>
+            <div className="d-flex justify-content-between mt-3">
+              <button className="btn btn-danger" onClick={confirmDelete}>
+                Yes, Delete
+              </button>
+              <button className="btn btn-secondary" onClick={cancelDelete}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
