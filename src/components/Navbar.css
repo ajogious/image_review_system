@@ -5,34 +5,54 @@
   z-index: 1000;
 }
 
-.nav-home {
+.nav-home,
+.nav-admin {
   text-decoration: none;
   color: #fff;
   transition: all 0.5s ease;
 }
 
-.nav-home:hover {
+.nav-home:hover,
+.nav-admin:hover {
   color: #959595;
 }
-
+/* Custom Modal Overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1040; /* Ensure it is above other content */
+  display: block; /* Ensure it's visible */
 }
 
+/* Modal Content Styling */
 .modal .modal-content {
   border-radius: 10px;
+  max-width: 500px; /* Optional, adjust as per your preference */
+  margin: 10% auto; /* Centers modal vertically */
+  z-index: 1050; /* Ensure modal content is above the overlay */
 }
 
+/* Modal Header Styling */
 .modal .modal-header {
   background-color: #343a40;
   color: white;
 }
 
+/* Close Button Custom Styling */
 .modal .btn-close {
   color: white;
+}
+
+/* Ensure modal content has higher z-index */
+.modal.show .modal-dialog {
+  z-index: 1060; /* Higher than both overlay and modal content */
+}
+
+/* Optional - prevent default Bootstrap backdrop */
+.modal-backdrop {
+  display: none; /* If you don't want the default backdrop */
 }

@@ -1,7 +1,9 @@
 import React, { useMemo, useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-function Card({ image }) {
+function Card({ image, isAdmin }) {
+  console.log(isAdmin);
+
   const randomNum = useMemo(
     () => Math.trunc(Math.random() * image.images.length),
     [image.images]
@@ -47,6 +49,21 @@ function Card({ image }) {
           )}
         </div>
       </Link>
+      {isAdmin && (
+        <div className="d-flex justify-content-between my-2 px-2">
+          <Link
+            to="/edit-image"
+            state={{ image }}
+            className="btn btn-warning"
+            style={{ width: "40%" }}
+          >
+            Edit
+          </Link>
+          <Link className="btn btn-danger" style={{ width: "40%" }}>
+            Delete
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

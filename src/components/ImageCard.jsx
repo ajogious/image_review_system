@@ -4,7 +4,7 @@ import SearchBox from "./SearchBox";
 import fetchPaginatedData from "../data/fetchPaginatedData";
 import "./ImageCard.css";
 
-function ImageCard() {
+function ImageCard({ isAdminLoggedIn }) {
   const [images, setImages] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -51,7 +51,7 @@ function ImageCard() {
 
       <div className="row g-0">
         {images.map((image) => (
-          <Card key={image.id} image={image} />
+          <Card key={image.id} image={image} isAdmin={isAdminLoggedIn} />
         ))}
       </div>
 

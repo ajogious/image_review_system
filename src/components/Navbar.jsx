@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 
-function Navbar() {
-  const [isAdminLoggedIn, setAdminLoggedIn] = useState(false);
+function Navbar({ setAdminLoggedIn, isAdminLoggedIn }) {
   const [showModal, setShowModal] = useState(false);
   const [loginForm, setLoginForm] = useState({ username: "", password: "" });
   const [errors, setErrors] = useState({ username: "", password: "" });
@@ -29,8 +27,13 @@ function Navbar() {
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      setAdminLoggedIn(true);
-      setShowModal(false);
+      // For simulation purposes, assuming the username "admin" and password "admin123"
+      if (loginForm.username === "admin" && loginForm.password === "admin123") {
+        setAdminLoggedIn(true);
+        setShowModal(false);
+      } else {
+        setErrors({ username: "Invalid credentials", password: "" });
+      }
       setLoginForm({ username: "", password: "" });
     }
   };
@@ -43,9 +46,14 @@ function Navbar() {
             <Link className="navbar-brand" to="/">
               Logo
             </Link>
-            <Link className="nav-home" to="/">
+            <Link className="nav-home pe-3" to="/">
               Home
             </Link>
+            {isAdminLoggedIn && (
+              <Link className="nav-admin" to="/add-image">
+                Add Image
+              </Link>
+            )}
           </div>
           {!isAdminLoggedIn ? (
             <button
@@ -96,7 +104,10 @@ function Navbar() {
                       id="username"
                       value={loginForm.username}
                       onChange={(e) =>
-                        setLoginForm({ ...loginForm, username: e.target.value })
+                        setLoginForm({
+                          ...loginForm,
+                          username: e.target.value,
+                        })
                       }
                     />
                     {errors.username && (
@@ -115,7 +126,10 @@ function Navbar() {
                       id="password"
                       value={loginForm.password}
                       onChange={(e) =>
-                        setLoginForm({ ...loginForm, password: e.target.value })
+                        setLoginForm({
+                          ...loginForm,
+                          password: e.target.value,
+                        })
                       }
                     />
                     {errors.password && (
